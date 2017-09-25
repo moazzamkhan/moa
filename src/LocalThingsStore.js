@@ -2,7 +2,7 @@ const fs = require("fs")
 const configFilename = "moa-config.json"
 let filename = null
 
-class LocalStore {
+class LocalThingsStore {
   setData(content) {
     fs.writeFileSync(filename, JSON.stringify(content))
   }
@@ -31,7 +31,7 @@ class LocalStore {
   }
 
   createStoreFile() {
-    fs.writeFileSync(filename, JSON.stringify({ properties: [] }))
+    fs.writeFileSync(filename, JSON.stringify({ things: [] }))
   }
 
   init() {
@@ -54,6 +54,6 @@ class LocalStore {
   }
 }
 
-const ls = new LocalStore()
+const ls = new LocalThingsStore()
 ls.init()
 export default ls

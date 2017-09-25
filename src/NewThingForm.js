@@ -16,26 +16,23 @@ const styles = theme => ({
   }
 })
 
-class PersonalInfoForm extends Component {
+class NewThingForm extends Component {
   render() {
-    const { classes, onSubmit, onCancel } = this.props
+    const { classes, onThingAdd } = this.props
     return (
       <Paper className={classes.root} elevation={4}>
         <form
           noValidate
           autoComplete="off"
-          onSubmit={e => {            
+          onSubmit={e => {
             const fd = new FormData(e.target)
-            onSubmit({ name: fd.get("name"), value: fd.get("value") })
+            onThingAdd({ name: fd.get("name"), value: fd.get("value") })
             e.preventDefault()
           }}
         >
           <TextField label="Name" fullWidth margin="normal" name="name" />
           <TextField label="Value" multiline fullWidth margin="normal" name="value" />
           <div style={{ textAlign: "right" }}>
-            <Button raised className={classes.button} onClick={onCancel}>
-              Cancel
-            </Button>
             <Button raised type="submit" color="primary" className={classes.button}>
               Add
             </Button>
@@ -46,4 +43,4 @@ class PersonalInfoForm extends Component {
   }
 }
 
-export default withStyles(styles)(PersonalInfoForm)
+export default withStyles(styles)(NewThingForm)

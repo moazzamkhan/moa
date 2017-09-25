@@ -23,7 +23,7 @@ const styles = theme => ({
 
 class AppHeader extends Component {
   render() {
-    const { classes, onSave } = this.props
+    const { classes, onSave, showForm } = this.props
 
     return (
       <div
@@ -33,8 +33,13 @@ class AppHeader extends Component {
         }}
       >
         <Grid container spacing={16}>
-          <Grid item xs={6} />
-          <Grid item xs={6} style={{ textAlign: "right" }}>
+          <Grid item xs={4}>
+            <Button color="contrast" onClick={showForm}>
+              +Add Thing
+            </Button>
+          </Grid>
+          <Grid item xs={4} />
+          <Grid item xs={4} style={{ textAlign: "right" }}>
             <Button color="contrast" onClick={onSave}>
               Save
             </Button>

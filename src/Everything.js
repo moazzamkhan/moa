@@ -10,8 +10,6 @@ import { withStyles } from "material-ui/styles"
 
 import DeleteIcon from "material-ui-icons/Delete"
 import IconButton from "material-ui/IconButton"
-import PropertyListToolbar from "./PropertyListToolbar"
-import PersonalInfoForm from "./PersonalInfoForm"
 
 const styles = theme => ({
   button: {
@@ -19,40 +17,21 @@ const styles = theme => ({
   }
 })
 
-class PropertyList extends Component {
-  constructor() {
-    super()
-    this.state = {
-      canShowForm: false
-    }
-  }
+class Everything extends Component {
   render() {
-    const { properties, classes, onChange, onTitleChange, title, onPropertyAdd } = this.props
+    const { things, classes, onChange } = this.props
     return (
       <div>
-        <PropertyListToolbar onChange={onTitleChange} title={title} showForm={this.showForm.bind(this)} />
-        <div
-          style={{
-            padding: 20,
-            display: this.state.canShowForm ? "block" : "none"
-          }}
-        >
-          <PersonalInfoForm
-            onSubmit={p => {
-              onPropertyAdd(p)
-              this.hideForm()
-            }}
-            onCancel={this.hideForm.bind(this)}
-          />
-        </div>
         <div
           style={{
             padding: 20
           }}
         >
-          {properties.map(p => (
+          {things.map(p => (
             <TextField
+              disabled
               key={p.id}
+              onClick={e => (e.target.disabled = false)}
               onChange={e => onChange(Object.assign(p, { value: e.target.value }))}
               label={p.name}
               placeholder={p.name}
@@ -70,16 +49,6 @@ class PropertyList extends Component {
       </div>
     )
   }
-  hideForm() {
-    this.setState({
-      canShowForm: false
-    })
-  }
-  showForm() {
-    this.setState({
-      canShowForm: true
-    })
-  }
 }
 
-export default withStyles(styles)(PropertyList)
+export default withStyles(styles)(Everything)
