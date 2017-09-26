@@ -21,5 +21,5 @@ ReactDOM.render(
 )
 
 store.subscribe(() => {
-  console.log(arguments, "yo")
+  console.log(store.getState())
 })

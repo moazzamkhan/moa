@@ -43695,12 +43695,13 @@ class NewThingForm extends __WEBPACK_IMPORTED_MODULE_0_react__["Component"] {
   }
 }
 
-const createThing = (name, value) => {
+const createThing = (name, value = "", type = "text") => {
   const dateString = new Date().toJSON();
   return {
+    id: __WEBPACK_IMPORTED_MODULE_6_shortid__["generate"](),
     name,
     value,
-    id: __WEBPACK_IMPORTED_MODULE_6_shortid__["generate"](),
+    type,
     createdOn: dateString,
     lastModifiedOn: dateString
   };
@@ -47675,7 +47676,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_redux__ = __webpack_require__(65);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__reducers__ = __webpack_require__(317);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__LocalThingsStore__ = __webpack_require__(281);
-var _arguments = arguments;
 // This file is required by the index.html file and will
 // be executed in the renderer process for that window.
 // All of the Node.js APIs are available in this process.
@@ -47698,7 +47698,7 @@ __WEBPACK_IMPORTED_MODULE_1_react_dom___default.a.render(__WEBPACK_IMPORTED_MODU
 ), document.getElementById("root"));
 
 store.subscribe(() => {
-  console.log(_arguments, "yo");
+  console.log(store.getState());
 });
 
 /***/ }),
@@ -85646,6 +85646,8 @@ function verifySubselectors(mapStateToProps, mapDispatchToProps, mergeProps, dis
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_router_dom__ = __webpack_require__(445);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_redux__ = __webpack_require__(855);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__types_TextRenderer__ = __webpack_require__(879);
+
 
 
 
@@ -85656,17 +85658,7 @@ you are good my friend
 i am a wolf of wall street
 i am awold of wall street`;
 
-const ThingRenderer = ({ thing }) => __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-  "div",
-  null,
-  __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-    "h3",
-    null,
-    thing.id,
-    ", ",
-    thing.name
-  )
-);
+const ThingRenderer = ({ thing }) => __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__types_TextRenderer__["a" /* default */], { thing: thing });
 
 const mapStateToProps = (state, ownProps) => {
   const { match } = ownProps;
@@ -86066,6 +86058,33 @@ module.exports = isShortId;
 
 module.exports = parseInt(process.env.NODE_UNIQUE_ID || 0, 10);
 
+
+/***/ }),
+/* 879 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_material_ui_TextField__ = __webpack_require__(229);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_material_ui_TextField___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_material_ui_TextField__);
+
+
+
+const TextRenderer = ({ thing }) => {
+  return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_material_ui_TextField___default.a, {
+    disabled: true,
+    key: thing.id,
+    label: thing.name,
+    placeholder: thing.name,
+    multiline: true,
+    defaultValue: thing.value,
+    fullWidth: true,
+    margin: "normal"
+  });
+};
+
+/* harmony default export */ __webpack_exports__["a"] = (TextRenderer);
 
 /***/ })
 /******/ ]);

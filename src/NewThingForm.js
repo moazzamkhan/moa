@@ -47,12 +47,13 @@ class NewThingForm extends Component {
   }
 }
 
-const createThing = (name, value) => {
+const createThing = (name, value = "", type = "text") => {
   const dateString = new Date().toJSON()
   return {
+    id: shortid.generate(),
     name,
     value,
-    id: shortid.generate(),
+    type,
     createdOn: dateString,
     lastModifiedOn: dateString
   }
