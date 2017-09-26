@@ -1,0 +1,23 @@
+Name
+Date of Birth
+Gender
+Blood Group
+
+Mobile[]
+    Label
+    Number
+
+Phone[]
+    Label
+    Number
+
+Email[]
+    Label
+    Email-Address
+
+Addresses[]
+    Label
+    Address
+
+Social Accounts
+    ...

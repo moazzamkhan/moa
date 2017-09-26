@@ -4,6 +4,10 @@ import TextField from "material-ui/TextField"
 import Button from "material-ui/Button"
 import Paper from "material-ui/Paper"
 import { withStyles } from "material-ui/styles"
+import { connect } from "react-redux"
+import * as shortid from "shortid"
+import { withRouter } from "react-router-dom"
+import { addThing } from "./actions"
 
 const styles = theme => ({
   root: theme.mixins.gutters({
@@ -26,7 +30,7 @@ class NewThingForm extends Component {
           autoComplete="off"
           onSubmit={e => {
             const fd = new FormData(e.target)
-            onThingAdd({ name: fd.get("name"), value: fd.get("value") })
+            onThingAdd(createThing(fd.get("name"), fd.get("value")))
             e.preventDefault()
           }}
         >
@@ -43,4 +47,29 @@ class NewThingForm extends Component {
   }
 }
 
-export default withStyles(styles)(NewThingForm)
+const createThing = (name, value) => {
+  const dateString = new Date().toJSON()
+  return {
+    name,
+    value,
+    id: shortid.generate(),
+    createdOn: dateString,
+    lastModifiedOn: dateString
+  }
+}
+const mapStateToProps = (state, ownProps) => {
+  const { match } = ownProps
+  return {
+    thing: state.things.filter(t => t.id === match.params.id)[0]
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onThingAdd: t => dispatch(addThing(t))
+  }
+}
+
+// onThingAdd={this.onThingAdd.bind(this)}
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(NewThingForm)))

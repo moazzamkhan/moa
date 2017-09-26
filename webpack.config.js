@@ -1,9 +1,10 @@
 const path = require("path")
 
 module.exports = {
-  entry: "./src/renderer.js",
+  devtool: "source-map",
+  entry: { app: "./src/renderer.js", test: "./src/test-redux.js" },
   output: {
-    filename: "app.bundle.js",
+    filename: "[name].bundle.js",
     path: path.resolve(__dirname, "dist")
   },
   module: {

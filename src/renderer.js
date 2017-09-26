@@ -4,5 +4,22 @@
 import React from "react"
 import ReactDOM from "react-dom"
 import App from "./App.js"
+import { Provider } from "react-redux"
 
-ReactDOM.render(<App name="Goodness kayode" />, document.getElementById("root"))
+import { createStore } from "redux"
+
+import thingsApp from "./reducers"
+import LocalThingsStore from "./LocalThingsStore"
+
+let store = createStore(thingsApp, LocalThingsStore.getData())
+
+ReactDOM.render(
+  <Provider store={store}>
+    <App />
+  </Provider>,
+  document.getElementById("root")
+)
+
+store.subscribe(() => {
+  console.log(arguments, "yo")
+})

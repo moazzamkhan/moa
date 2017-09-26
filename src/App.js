@@ -4,7 +4,7 @@ import EverythingPage from "./EverythingPage"
 import Button from "material-ui/Button"
 import LocalThingsStore from "./LocalThingsStore"
 import SettingsPage from "./SettingsPage"
-import MainPage from "./MainPage"
+import MainLayout from "./MainLayout"
 
 export default class App extends Component {
   constructor() {
@@ -17,7 +17,7 @@ export default class App extends Component {
     console.log(this.state.location )
     const landingPage = this.state.location ? <EverythingPage /> : <SettingsPage onSave={this.onSave.bind(this)} />
     // return <div>{landingPage}</div>
-    return <MainPage />
+    return <MainLayout />
   }
 
   onSave(location) {

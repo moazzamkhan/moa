@@ -1,0 +1,22 @@
+Thing
+    id
+    name
+    value
+    type(default text)
+    createdOn
+    lastModified
+
+group also a thing - Array of array of things, this would also represent layout, for example - 
+
+
+Thing, Thing --> show two things in a row
+Thing, Thing, Thing --> show 3 things in a row
+Thing - show 1 thing in a row
+
+supports only 2 things in row maximum
+
+create a drag drop page for that?
+Or make a label for that?
+
+
+

@@ -1,4 +1,4 @@
-import React, {Component} from "react"
+import React, { Component } from "react"
 import PropTypes from "prop-types"
 import { withStyles } from "material-ui/styles"
 import Drawer from "material-ui/Drawer"
@@ -14,6 +14,9 @@ import EverythingPage from "./EverythingPage"
 import NewThingForm from "./NewThingForm"
 import LocalThingsStore from "./LocalThingsStore"
 import AppToolbar from "./AppToolbar"
+import NotesContainer from "./NotesContainer"
+import SidebarContainer from "./SidebarContainer"
+import ThingRenderer from "./ThingRenderer"
 
 import { BrowserRouter as Router, Route, Link } from "react-router-dom"
 
@@ -60,7 +63,7 @@ const styles = theme => ({
   }
 })
 
-class MainPage extends Component {
+class MainLayout extends Component {
   constructor() {
     super()
     this.state = LocalThingsStore.getData()
@@ -94,24 +97,11 @@ class MainPage extends Component {
                 </Button>
               </div>
               <Divider />
-              <List>
-                <ListItem component={Link} to="/">
-                  <Avatar>
-                    <FolderIcon />
-                  </Avatar>
-                  <ListItemText primary="Everything" secondary="Jan 9, 2016" />
-                </ListItem>
-                <ListItem component={Link} to="/about">
-                  <Avatar>
-                    <FolderIcon />
-                  </Avatar>
-                  <ListItemText primary="Work" secondary="Jan 7, 2016" />
-                </ListItem>
-              </List>
+              <SidebarContainer />
             </Drawer>
             <main className={classes.content}>
-              <Route exact path="/" component={() => <EverythingPage {...this.state}/>} />
-              <Route path="/new" component={() => <NewThingForm onThingAdd={this.onThingAdd.bind(this)} />} />
+              <Route path="/new" component={() => <NewThingForm />} />
+              <Route path="/things/:id" component={ThingRenderer} />
             </main>
           </div>
         </div>
@@ -122,15 +112,6 @@ class MainPage extends Component {
   onSave() {
     LocalThingsStore.setData(this.state)
   }
-
-  onThingAdd(t) {
-    if (t) {
-      t.id = this.state.things.length
-      this.setState({
-        things: [...this.state.things, t]
-      })
-    }
-  }
 }
 
-export default withStyles(styles)(MainPage)
+export default withStyles(styles)(MainLayout)
