@@ -1,29 +1,28 @@
 import React from "react"
 import { Component } from "react"
-import EverythingPage from "./EverythingPage"
-import Button from "material-ui/Button"
-import LocalThingsStore from "./LocalThingsStore"
+import Store from "./store"
 import SettingsPage from "./SettingsPage"
-import MainLayout from "./MainLayout"
+// import MainLayout from "./MainLayout"
+// import EverythingPage from "./EverythingPage"
+import TypesLayout from "./TypesLayout"
 
 export default class App extends Component {
   constructor() {
     super()
-    this.state = {
-      location: LocalThingsStore.getLocation()
-    }
+    this.state = Store.getConfig()
   }
   render() {
-    console.log(this.state.location )
-    const landingPage = this.state.location ? <EverythingPage /> : <SettingsPage onSave={this.onSave.bind(this)} />
+    // const landingPage = this.state.location ? <EverythingPage /> : <SettingsPage onSave={this.onSave.bind(this)} />
     // return <div>{landingPage}</div>
-    return <MainLayout />
+    return <TypesLayout />
+    // return <SettingsPage onSave={this.onSave.bind(this)} />
   }
 
   onSave(location) {
-    LocalThingsStore.setLocation(location)
+    Store.setConfig(Object.assign({ ...this.state }, { location }))
     this.setState({
       location: location
     })
   }
 }
+

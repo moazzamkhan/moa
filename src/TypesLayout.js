@@ -10,15 +10,11 @@ import FolderIcon from "material-ui-icons/Folder"
 import Typography from "material-ui/Typography"
 import Divider from "material-ui/Divider"
 import Button from "material-ui/Button"
-import EverythingPage from "./EverythingPage"
-import NewThingForm from "./NewThingForm"
-import NewTypeForm from "./NewTypeForm"
 import Store from "./store"
 import AppToolbar from "./AppToolbar"
-import NotesContainer from "./NotesContainer"
 import SidebarContainer from "./SidebarContainer"
-import ThingRenderer from "./ThingRenderer"
-
+import SidebarHeaderContainer from "./SidebarHeaderContainer"
+import NewTypeFormContainer from "./NewTypeFormContainer"
 import { BrowserRouter as Router, Route, Link } from "react-router-dom"
 
 const drawerWidth = 240
@@ -50,7 +46,6 @@ const styles = theme => ({
     height: "100%",
     width: drawerWidth
   },
-  drawerHeader: theme.mixins.toolbar,
   content: {
     backgroundColor: theme.palette.background.default,
     width: "100%",
@@ -64,18 +59,13 @@ const styles = theme => ({
   }
 })
 
-class MainLayout extends Component {
-  constructor() {
-    super()
-    this.state = Store.getData()
-  }
-
+class TypesLayout extends Component {
   render() {
     const { classes } = this.props
     return (
       <Router>
         <div className={classes.root}>
-          <div className={classes.appFrame}>
+          <div className={classes.appFrame}>            
             <AppBar className={classes.appBar}>
               <AppToolbar onSave={this.onSave.bind(this)} />
             </AppBar>
@@ -85,38 +75,19 @@ class MainLayout extends Component {
                 paper: classes.drawerPaper
               }}
             >
-              <div
-                className={classes.drawerHeader}
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center"
-                }}
-              >
-                <Button raised color="accent" component={Link} to="/new">
-                  +Thing
-                </Button>
-                <Button raised color="accent" component={Link} to="/types/new">
-                  +Type
-                </Button>
-              </div>
+              <SidebarHeaderContainer />
               <Divider />
               <SidebarContainer />
             </Drawer>
             <main className={classes.content}>
-              <Route path="/new" component={() => <NewThingForm />} />
-              <Route path="/types/new" component={() => <NewTypeForm />} />
-              <Route path="/things/:id" component={ThingRenderer} />
+              <Route path="/types/:id" component={() => <NewTypeFormContainer />} />
             </main>
           </div>
         </div>
       </Router>
     )
   }
-
-  onSave() {
-    Store.setData(this.state)
-  }
+  onSave() {}
 }
 
-export default withStyles(styles)(MainLayout)
+export default withStyles(styles)(TypesLayout)

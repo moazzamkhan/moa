@@ -2,7 +2,7 @@ import React from "react"
 import { Component } from "react"
 import Everything from "./Everything"
 import Button from "material-ui/Button"
-import LocalThingsStore from "./LocalThingsStore"
+import Store from "./store"
 import AppHeader from "./AppHeader"
 import NewThingForm from "./NewThingForm"
 

@@ -54,8 +54,8 @@ const createThing = (name, value = "", type = "text") => {
     name,
     value,
     type,
-    createdOn: dateString,
-    lastModifiedOn: dateString
+    created: dateString,
+    lastModified: dateString
   }
 }
 const mapStateToProps = (state, ownProps) => {

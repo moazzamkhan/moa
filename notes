@@ -1,9 +1,21 @@
+TYPES ARE THE things with type `type`
+Type = {
+    id: 
+    name: unique with namespace
+    namespace: namespace
+    properties:[]
+    type: "type",
+    created
+    lastModified
+
+}
+
 Thing
     id
     name
     value
     type(default text)
-    createdOn
+    created
     lastModified
 
 group also a thing - Array of array of things, this would also represent layout, for example - 

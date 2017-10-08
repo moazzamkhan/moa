@@ -3,15 +3,16 @@
 // All of the Node.js APIs are available in this process.
 import React from "react"
 import ReactDOM from "react-dom"
+
 import App from "./App.js"
 import { Provider } from "react-redux"
 
 import { createStore } from "redux"
 
 import thingsApp from "./reducers"
-import LocalThingsStore from "./LocalThingsStore"
+import Store from "./store"
 
-let store = createStore(thingsApp, LocalThingsStore.getData())
+let store = createStore(thingsApp, Store.getData())
 
 ReactDOM.render(
   <Provider store={store}>

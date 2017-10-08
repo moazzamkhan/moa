@@ -26,4 +26,4 @@ const things = (state = [], action) => {
 const filter = (state = NO_FILTER, action) => {
   return state
 }
-export default combineReducers({things, filter})
+export default combineReducers({ things, filter })

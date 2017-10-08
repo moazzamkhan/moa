@@ -2,7 +2,7 @@ const fs = require("fs")
 const configFilename = "moa-config.json"
 let filename = null
 
-class LocalThingsStore {
+export default class LocalThingsStoreFile {
   setData(content) {
     fs.writeFileSync(filename, JSON.stringify(content))
   }
@@ -15,18 +15,17 @@ class LocalThingsStore {
     return JSON.parse(fs.readFileSync(configFilename, "utf8"))
   }
 
-  getLocation() {
+  getConfig() {
     try {
-      const config = JSON.parse(fs.readFileSync(configFilename, "utf8"))
-      return config.location
+      return JSON.parse(fs.readFileSync(configFilename, "utf8")) || {}
     } catch (e) {
-      return null
+      return {}
     }
   }
 
-  setLocation(location) {
-    filename = location + "/localstorage.json"
-    fs.writeFileSync(configFilename, JSON.stringify({ location: filename }))
+  setConfig(config) {
+    filename = config.location + "/localstorage.json"
+    fs.writeFileSync(configFilename, JSON.stringify(config))
     this.createStoreFile()
   }
 
@@ -48,12 +47,4 @@ class LocalThingsStore {
       })
     }
   }
-
-  doesLocalStoreExists() {
-    return !!filename
-  }
 }
-
-const ls = new LocalThingsStore()
-ls.init()
-export default ls

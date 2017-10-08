@@ -5,7 +5,8 @@
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "build:w": "webpack --watch"
+    "build:w": "webpack --watch --config webpack.config.electron.js",
+    "serve": "webpack-dev-server --config webpack.config.web.js --content-base dist/"
   },
   "repository": "https://github.com/electron/electron-quick-start",
   "keywords": [
@@ -18,23 +19,33 @@
   "author": "GitHub",
   "license": "CC0-1.0",
   "devDependencies": {
+    "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-preset-env": "^1.6.0",
     "babel-preset-es2017": "^6.24.1",
+    "babel-preset-flow": "^6.23.0",
     "babel-preset-react": "^6.24.1",
     "devtron": "^1.4.0",
-    "electron": "~1.6.2",
+    "electron": "~1.7.8",
     "electron-debug": "^1.4.0",
+    "eslint": "^4.8.0",
+    "eslint-config-airbnb": "^16.0.0",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-jsx-a11y": "^6.0.2",
+    "eslint-plugin-react": "^7.4.0",
+    "flow-bin": "^0.55.0",
     "redux-devtools": "^3.4.0"
   },
   "dependencies": {
     "draft-js": "^0.10.2",
-    "material-ui": "^1.0.0-beta.11",
+    "material-ui": "^1.0.0-beta.12",
     "material-ui-icons": "^1.0.0-beta.10",
     "moment": "^2.18.1",
     "path": "^0.12.7",
-    "react": "^15.6.1",
-    "react-dom": "^15.6.1",
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0",
     "react-redux": "^5.0.6",
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",

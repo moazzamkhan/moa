@@ -5,19 +5,18 @@ import { Link } from "react-router-dom"
 import Avatar from "material-ui/Avatar"
 import FolderIcon from "material-ui-icons/Folder"
 import moment from "moment"
-import { connect } from 'react-redux'
-
+import { connect } from "react-redux"
 
 const Sidebar = props => {
   const { things } = props
   return (
     <List>
       {things.map(t => (
-        <ListItem key={t.id} component={Link} to={"/things/" + t.id}>
+        <ListItem key={t.id} component={Link} to={t.url}>
           <Avatar>
             <FolderIcon />
           </Avatar>
-          <ListItemText primary={t.name} secondary={moment(t.lastModifiedOn).calendar()} />
+          <ListItemText primary={t.name} secondary={moment(t.lastModified).calendar()} />
         </ListItem>
       ))}
     </List>
@@ -26,7 +25,9 @@ const Sidebar = props => {
 
 const mapStateToProps = state => {
   return {
-    things: state.things
+    things: state.things.map(t => {
+      return Object.assign({ ...t }, { url: "/things/" + t.id })
+    })
   }
 }
 

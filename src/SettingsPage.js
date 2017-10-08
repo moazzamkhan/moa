@@ -15,11 +15,10 @@ export default class SettingsPage extends Component {
     }
   }
   render() {
-    const { onSave } = this.props
     return (
       <div>
         <Paper
-          elevation={4}
+          elevation={2}
           style={{
             margin: "100px auto",
             width: 600,
@@ -28,15 +27,10 @@ export default class SettingsPage extends Component {
         >
           <FormControl style={{ fontSize: 28 }} fullWidth>
             <InputLabel htmlFor="store-location">Local Store Location</InputLabel>
-            <Input id="store-location" onChange={(e) => this.saveLocation(e.target.value)} />
+            <Input id="store-location" onChange={this.handleChange.bind(this)} />
             <FormHelperText>Please provide a folder or directory full path where do you want to save your data.</FormHelperText>
           </FormControl>
-          <Button
-            raised
-            color="accent"
-            style={{ marginTop: 30, marginBottom: 30 }}
-            onClick={() => onSave(this.state.location)}
-          >
+          <Button raised color="accent" style={{ marginTop: 30, marginBottom: 30 }} onClick={this.handleClick.bind(this)}>
             Save
           </Button>
           <Typography type="body1" gutterBottom>
@@ -48,10 +42,12 @@ export default class SettingsPage extends Component {
       </div>
     )
   }
-
-  saveLocation(location) {
+  handleClick() {
+    this.props.onSave(this.state.location)
+  }
+  handleChange(e) {
     this.setState({
-      location: location
+      location: e.target.value
     })
   }
 }
