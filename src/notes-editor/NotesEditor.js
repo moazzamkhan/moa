@@ -20,7 +20,10 @@ class NotesEditor extends Component {
 
     this.mentionPlugin = createMentionPlugin()
     this.linkifyPlugin = createLinkifyPlugin()
-    this.emojiPlugin = createEmojiPlugin()
+    this.emojiPlugin = createEmojiPlugin({
+      imageType: "png",
+      imagePath: "./assets/EmojiOne_3.1.1_32x32_png/"
+    })
   }
 
   // state = { editorState: EditorState.createWithContent(ContentState.createFromText(this.props.value || "")) }
@@ -49,17 +52,17 @@ class NotesEditor extends Component {
     const { MentionSuggestions } = this.mentionPlugin
     const plugins = [this.mentionPlugin, this.linkifyPlugin, this.emojiPlugin]
     return (
-      <div className={editorStyles.editor} onClick={this.focus}>
-        <Editor ref={el => (this.editor = el)} editorState={this.state.editorState} onChange={this.onChange} plugins={plugins} />
-        <MentionSuggestions onSearchChange={this.onSearchChange} suggestions={this.state.suggestions} onAddMention={this.onAddMention} />
-        <EmojiSuggestions />
-        <EmojiSelect />
+      <div>
+        <div style={{ padding: 5 }}>
+          <EmojiSelect />
+        </div>
+        <div className={editorStyles.editor} onClick={this.focus}>
+          <Editor ref={el => (this.editor = el)} editorState={this.state.editorState} onChange={this.onChange} plugins={plugins} />
+          <MentionSuggestions onSearchChange={this.onSearchChange} suggestions={this.state.suggestions} onAddMention={this.onAddMention} />
+          <EmojiSuggestions />
+        </div>
       </div>
     )
-  }
-
-  componentDidMount() {
-    // this.editor.focus()
   }
 }
 
