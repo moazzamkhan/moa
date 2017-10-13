@@ -1,4 +1,5 @@
 import LocalThingsStoreWeb from "./LocalThingsStoreWeb"
-const store = new LocalThingsStoreWeb()
-store.init()
+import LocalThingsStoreFile from "./LocalThingsStoreFile"
+const store = new LocalThingsStoreFile()
+
 export default store

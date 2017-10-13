@@ -2,14 +2,16 @@ import React from "react"
 import { withRouter } from "react-router-dom"
 import { connect } from "react-redux"
 import TextRenderer from "./types/TextRenderer"
+import NotesEditor from "./notes-editor/NotesEditor"
 
-const dummyText = `Hello, How are you
-this is what i want haha ho ho
-you are good my friend
-i am a wolf of wall street
-i am awold of wall street`
-
-const ThingRenderer = ({ thing }) => <TextRenderer thing={thing} />
+const ThingRenderer = ({ thing }) => {  
+  switch (thing.type) {
+    case "Note":
+      return <NotesEditor thing={thing} />
+    default:
+      return <TextRenderer thing={thing} />
+  }
+}
 
 const mapStateToProps = (state, ownProps) => {
   const { match } = ownProps
@@ -23,7 +25,3 @@ const mapDispatchToProps = dispatch => {
 }
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ThingRenderer))
-
-// <Route exact path="/" component={() => <EverythingPage {...this.state} />} />
-// <Route path="/new" component={() => <NewThingForm onThingAdd={this.onThingAdd.bind(this)} />} />
-// <Route path="/notes" component={() => <NotesContainer value={dummyText} />} />

@@ -16,9 +16,7 @@ import Switch from "material-ui/Switch"
 import Select from "material-ui/Select"
 import Divider from "material-ui/Divider"
 import { FormControl, FormHelperText } from "material-ui/Form"
-import Dialog, { DialogActions, DialogContent, DialogContentText, DialogTitle } from "material-ui/Dialog"
 import shortid from "shortid"
-import NewTypeDialog from "./NewTypeDialog"
 
 const styles = theme => ({
   iconButtonStyle: {
@@ -28,16 +26,14 @@ const styles = theme => ({
 })
 
 class PropertyForm extends Component {
-  constructor() {
-    super()
-    this.handlePropertyChange = this.handlePropertyChange.bind(this)
-    this.handleAddNewType = this.handleAddNewType.bind(this)
-
-    this.state = {
-      dialogOpen: false
-    }
+  state = {
+    dialogOpen: false
   }
 
+  handlePropertyChange = change => {
+    this.props.onPropertyChange(Object.assign({ ...this.props.property }, change))
+  }
+  
   render() {
     const { property, types, classes, onPropertyDelete, onPropertyAdd } = this.props
     return (
@@ -76,10 +72,6 @@ class PropertyForm extends Component {
               </option>
             ))}
           </Select>
-          <Button color="accent" onClick={this.openNewTypeDialog.bind(this)}>
-            +Type
-          </Button>
-          <NewTypeDialog open={this.state.dialogOpen} onNewType={this.handleAddNewType} types={types} />
         </TableCell>
         <TableCell>
           <Switch
@@ -90,23 +82,6 @@ class PropertyForm extends Component {
         </TableCell>
       </TableRow>
     )
-  }
-
-  handlePropertyChange(change) {
-    this.props.onPropertyChange(Object.assign({ ...this.props.property }, change))
-  }
-
-  openNewTypeDialog() {
-    this.setState({ dialogOpen: true })
-  }
-
-  handleAddNewType(type) {
-    this.setState({
-      dialogOpen: false
-    })
-    if (type) {
-      this.props.onTypeAdded(type, Object.assign({ ...this.props.property }, { type: type.name }))
-    }
   }
 }
 

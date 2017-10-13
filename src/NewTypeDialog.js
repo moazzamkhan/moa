@@ -5,21 +5,18 @@ import TextField from "material-ui/TextField"
 import Button from "material-ui/Button"
 import Dialog, { DialogActions, DialogContent, DialogContentText, DialogTitle } from "material-ui/Dialog"
 import shortid from "shortid"
+import ThingFactory from "./ThingFactory"
 
 class NewTypeDialog extends Component {
-  constructor() {
-    super()
-    this.handleOnChange = this.handleOnChange.bind(this)
-    this.state = {
-      type: null
-    }
+  state = {
+    type: null
   }
 
   render() {
     const { open } = this.props
     return (
       <Dialog open={open}>
-        <DialogTitle>{"Create New Type"}</DialogTitle>
+        <DialogTitle>{"Create a Type"}</DialogTitle>
         <DialogContent>
           <TextField
             style={{ width: 400 }}
@@ -31,10 +28,10 @@ class NewTypeDialog extends Component {
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={this.handleCancel.bind(this)} color="primary">
+          <Button onClick={this.handleCancel} color="primary">
             Cancel
           </Button>
-          <Button onClick={this.handleOk.bind(this)} color="primary">
+          <Button onClick={this.handleOk} color="primary">
             Create
           </Button>
         </DialogActions>
@@ -42,15 +39,18 @@ class NewTypeDialog extends Component {
     )
   }
 
-  handleCancel() {
+  handleCancel = () => {
     this.props.onNewType(null)
   }
 
-  handleOk() {
-    const d = new Date().toJSON()
-    this.props.onNewType({ id: shortid.generate(), name: this.state.type, created: d, lastModified: d, type: "typedef"})
+  handleOk = () => {    
+    if (this.state.type) {
+      this.props.onNewType(ThingFactory.createType({name: this.state.type}))
+    } else {
+      this.handleCancel()
+    }
   }
-  handleOnChange(value) {
+  handleOnChange = value => {
     this.setState({ type: value })
   }
 }

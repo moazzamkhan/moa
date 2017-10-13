@@ -9,10 +9,9 @@ import { Provider } from "react-redux"
 
 import { createStore } from "redux"
 
-import thingsApp from "./reducers"
-import Store from "./store"
-
-let store = createStore(thingsApp, Store.getData())
+import thingsApp, { defaultFilterState } from "./reducers"
+import PersistentStore from "./store"
+let store = createStore(thingsApp, Object.assign({ filters: defaultFilterState }, PersistentStore.getData()))
 
 ReactDOM.render(
   <Provider store={store}>
@@ -22,5 +21,6 @@ ReactDOM.render(
 )
 
 store.subscribe(() => {
-  console.log(store.getState())
+  console.log(store.getState(), "Saved...")
+  PersistentStore.setData(store.getState())
 })

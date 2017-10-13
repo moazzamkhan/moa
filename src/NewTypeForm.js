@@ -48,52 +48,31 @@ class NewTypeForm extends Component {
     const { classes, typeList } = this.props
 
     return (
-      <div>
-        <Paper className={classes.paper}>
-          <div>
-            <div className={classes.inlineDiv50PercentWidth}>
-              <TextField
-                placeholder="Type Name"
-                margin="normal"
-                defaultValue={this.state.typeName}
-                name="type-name"
-                onChange={e => this.handleTypeNameChange(e.target.value)}
+      <Paper className={classes.paper}>        
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell />
+              <TableCell>Property Name</TableCell>
+              <TableCell>Property Type</TableCell>
+              <TableCell>Multiple Values?</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {this.state.properties.map(p => (
+              <PropertyForm
+                key={p.id}
+                onPropertyChange={this.handlePropertyChange.bind(this)}
+                onPropertyDelete={this.handleDeleteProperty.bind(this)}
+                onPropertyAdd={this.handleAddNewProperty.bind(this)}
+                onTypeAdded={this.onTypeAdded.bind(this)}
+                property={p}
+                types={typeList}
               />
-            </div>
-            <div className={classes.inlineDiv50PercentWidth} style={{ textAlign: "right" }}>
-              <Button raised color="primary" onClick={this.handleSave.bind(this)}>
-                Save
-              </Button>
-            </div>
-          </div>
-        </Paper>
-        <Paper className={classes.paper}>
-          <Divider />
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell />
-                <TableCell>Property Name</TableCell>
-                <TableCell>Property Type</TableCell>
-                <TableCell>Multiple Values?</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {this.state.properties.map(p => (
-                <PropertyForm
-                  key={p.id}
-                  onPropertyChange={this.handlePropertyChange.bind(this)}
-                  onPropertyDelete={this.handleDeleteProperty.bind(this)}
-                  onPropertyAdd={this.handleAddNewProperty.bind(this)}
-                  onTypeAdded={this.onTypeAdded.bind(this)}
-                  property={p}
-                  types={typeList}
-                />
-              ))}
-            </TableBody>
-          </Table>
-        </Paper>
-      </div>
+            ))}
+          </TableBody>
+        </Table>
+      </Paper>
     )
   }
 
@@ -138,5 +117,24 @@ class NewTypeForm extends Component {
     }
   }
 }
+
+// <Paper className={classes.paper}>
+// <div>
+//   <div className={classes.inlineDiv50PercentWidth}>
+//     <TextField
+//       placeholder="Type Name"
+//       margin="normal"
+//       defaultValue={this.state.typeName}
+//       name="type-name"
+//       onChange={e => this.handleTypeNameChange(e.target.value)}
+//     />
+//   </div>
+//   <div className={classes.inlineDiv50PercentWidth} style={{ textAlign: "right" }}>
+//     <Button raised color="primary" onClick={this.handleSave.bind(this)}>
+//       Save
+//     </Button>
+//   </div>
+// </div>
+// </Paper>
 
 export default withStyles(styles)(NewTypeForm)
