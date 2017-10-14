@@ -16,8 +16,8 @@ import SidebarContainer from "./SidebarContainer"
 import SidebarHeaderContainer from "./SidebarHeaderContainer"
 import ThingRenderer from "./ThingRenderer"
 
-import { HashRouter as Router, Route, Link } from "react-router-dom"
-// import { BrowserRouter as Router, Route, Link } from "react-router-dom"
+// import { HashRouter as Router, Route, Link } from "react-router-dom"
+import { BrowserRouter as Router, Route, Link } from "react-router-dom"
 
 const drawerWidth = 240
 
@@ -35,12 +35,11 @@ const styles = theme => ({
     width: "100%",
     height: "100%"
   },
-  appBar: {
-    backgroundColor: "#fafafa",
+  appBar: {    
     boxShadow: "none",
     position: "absolute",
     width: `calc(100% - ${drawerWidth}px)`,
-    marginLeft: drawerWidth,
+    marginLeft: drawerWidth,    
     order: 1
   },
   drawerPaper: {
@@ -55,8 +54,10 @@ const styles = theme => ({
     height: "calc(100% - 56px)",
     marginTop: 56,
     [theme.breakpoints.up("sm")]: {
-      height: "calc(100% - 64px)",
-      marginTop: 64
+      height: "calc(100% - 48px)",
+      overflow: "auto",
+      marginTop: 48,
+      padding: 5
     }
   }
 })
