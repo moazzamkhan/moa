@@ -1,23 +1,16 @@
 import React, { Component } from "react"
-import PropTypes from "prop-types"
 import { withStyles } from "material-ui/styles"
 import Drawer from "material-ui/Drawer"
 import AppBar from "material-ui/AppBar"
 import Toolbar from "material-ui/Toolbar"
-import List, { ListItem, ListItemText } from "material-ui/List"
-import Avatar from "material-ui/Avatar"
-import FolderIcon from "material-ui-icons/Folder"
-import Typography from "material-ui/Typography"
 import Divider from "material-ui/Divider"
-import Button from "material-ui/Button"
-import Store from "./store"
 import AppToobarContainer from "./AppToolbarContainer"
 import SidebarContainer from "./SidebarContainer"
 import SidebarHeaderContainer from "./SidebarHeaderContainer"
 import ThingRenderer from "./ThingRenderer"
-
-// import { HashRouter as Router, Route, Link } from "react-router-dom"
-import { BrowserRouter as Router, Route, Link } from "react-router-dom"
+import { Redirect } from "react-router-dom"
+import { connect } from "react-redux"
+import { updateThing } from "./actions"
 
 const drawerWidth = 240
 
@@ -35,11 +28,11 @@ const styles = theme => ({
     width: "100%",
     height: "100%"
   },
-  appBar: {    
+  appBar: {
     boxShadow: "none",
     position: "absolute",
     width: `calc(100% - ${drawerWidth}px)`,
-    marginLeft: drawerWidth,    
+    marginLeft: drawerWidth,
     order: 1
   },
   drawerPaper: {
@@ -62,34 +55,52 @@ const styles = theme => ({
   }
 })
 
-class MainLayout extends Component {
-  render() {
-    const { classes } = this.props
+const MainLayout = ({ things, classes, match, onThingUpdated }) => {
+  const { type, id } = match.params
+  if (!id && things.length) {
+    return <Redirect to={"/" + type + "/" + things[0].id} />
+  } else {
     return (
-      <Router>
-        <div className={classes.root}>
-          <div className={classes.appFrame}>
-            <AppBar className={classes.appBar}>
-              <Route path="/" exact component={() => <AppToobarContainer />} />
-              <Route path="/things/:id" component={() => <AppToobarContainer />} />
-            </AppBar>
-            <Drawer
-              type="permanent"
-              classes={{
-                paper: classes.drawerPaper
-              }}
-            >
-              <SidebarHeaderContainer />
-              <Divider />
-              <SidebarContainer />
-            </Drawer>
-            <main className={classes.content}>
-              <Route path="/things/:id" component={() => <ThingRenderer />} />
-            </main>
-          </div>
+      <div className={classes.root}>
+        <div className={classes.appFrame}>
+          <AppBar className={classes.appBar}>
+            <AppToobarContainer {...{ type, id }} />
+          </AppBar>
+          <Drawer
+            type="permanent"
+            classes={{
+              paper: classes.drawerPaper
+            }}
+          >
+            <SidebarHeaderContainer {...{ type, id }} />
+            <Divider />
+            <SidebarContainer {...{ things, type, id }} />
+          </Drawer>
+          <main className={classes.content}>
+            {id ? (
+              <ThingRenderer {...{ type, id }} onChange={thing => onThingUpdated(thing)} />
+            ) : (
+              <h1>Nothing is here. Please create one</h1>
+            )}
+          </main>
         </div>
-      </Router>
+      </div>
     )
   }
 }
-export default withStyles(styles)(MainLayout)
+
+const mapStateToProps = ({ things }, { match }) => {
+  return {
+    things: things
+      .filter(t => t.type === match.params.type)
+      .sort((a, b) => new Date(a.lastModified).getTime() < new Date(b.lastModified).getTime())
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onThingUpdated: thing => dispatch(updateThing(thing))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(MainLayout))

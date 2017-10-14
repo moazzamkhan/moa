@@ -19,9 +19,7 @@ export default class AppToolbar extends Component {
           style={{
             flex: 1
           }}
-        >
-          {title}
-        </Typography>
+        />
         <IconButton color="contrast" aria-label={"New Note"} onClick={() => console.log("you")}>
           <MoreVertIcon />
         </IconButton>
@@ -29,7 +27,3 @@ export default class AppToolbar extends Component {
     )
   }
 }
-
-// export default withStyles(styles)(AppToobar)
-// contacts
-// class

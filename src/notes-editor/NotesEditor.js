@@ -1,90 +1,74 @@
 import React from "react"
 import { Component } from "react"
-import { EditorState, ContentState } from "draft-js"
-import Editor from "draft-js-plugins-editor"
-
-import createMentionPlugin, { defaultSuggestionsFilter } from "draft-js-mention-plugin"
-import createLinkifyPlugin from "draft-js-linkify-plugin"
-import createEmojiPlugin from "draft-js-emoji-plugin"
-import createInlineToolbarPlugin from "draft-js-inline-toolbar-plugin"
-import createToolbarPlugin from "draft-js-static-toolbar-plugin"
+import { Editor, EditorState, ContentState } from "draft-js"
+import TextField from "material-ui/TextField"
 
 import editorStyles from "./editorStyles.css"
-import mentions from "../init-data/mentions"
-
-import "draft-js-mention-plugin/lib/plugin.css"
-import "draft-js-linkify-plugin/lib/plugin.css"
-import "draft-js-emoji-plugin/lib/plugin.css"
-import "draft-js-inline-toolbar-plugin/lib/plugin.css"
 
 class NotesEditor extends Component {
   constructor(props) {
     super(props)
-
-    this.mentionPlugin = createMentionPlugin()
-    this.linkifyPlugin = createLinkifyPlugin()
-    this.inlineToolbarPlugin = createInlineToolbarPlugin()
-    this.toolbarPlugin  = createToolbarPlugin();
-    
-    this.emojiPlugin = createEmojiPlugin({
-      imageType: "png",
-      imagePath: "./assets/EmojiOne_3.1.1_32x32_png/"
-    })
+    this.state = this.getStateFromProps(props)
   }
 
-  // state = { editorState: EditorState.createWithContent(ContentState.createFromText(this.props.value || "")) }
-  state = {
-    editorState: EditorState.createEmpty(),
-    suggestions: mentions
+  getStateFromProps = props => {
+    return {
+      ...props.thing,
+      editorState: props.thing.value
+        ? EditorState.createWithContent(ContentState.createFromText(props.thing.value))
+        : EditorState.createEmpty()
+    }
   }
 
-  onChange = editorState => {
-    // console.log(editorState.getCurrentContent().getPlainText())
+  onChange = editorState => {    
     this.setState({ editorState })
+    this.props.onChange(Object.assign({ ...this.props.thing }, { value: editorState.getCurrentContent().getPlainText() }))
   }
 
-  onAddMention = () => {
-    // get the mention object selected
-  }
-
-  onSearchChange = ({ value }) => {
-    this.setState({
-      suggestions: defaultSuggestionsFilter(value, mentions)
-    })
-  }
-
-  render() {
-    const { EmojiSuggestions, EmojiSelect } = this.emojiPlugin
-    const { MentionSuggestions } = this.mentionPlugin
-    const { InlineToolbar } = this.inlineToolbarPlugin
-    const { Toolbar } = this.toolbarPlugin;    
-
-    const plugins = [this.mentionPlugin, this.linkifyPlugin, this.emojiPlugin, this.inlineToolbarPlugin]
-    return (
-      <div className={editorStyles.editor} onClick={this.focus}>
-        <Editor
-          ref={el => {
-            this.editor = el
-          }}
-          editorState={this.state.editorState}
-          onChange={this.onChange}
-          plugins={plugins}
-        />
-        <MentionSuggestions onSearchChange={this.onSearchChange} suggestions={this.state.suggestions} onAddMention={this.onAddMention} />
-        <EmojiSuggestions />
-        <InlineToolbar />
-      </div>
-    )
+  onTitleChange = name => {
+    console.log(name)
+    this.setState({ name })
+    this.props.onChange(Object.assign({ ...this.props.thing }, { name }))
   }
 
   focus = () => {
     this.editor.focus()
   }
 
+  render() {
+    return (
+      <div>
+        <TextField
+          disabled
+          multiline
+          value={this.state.name}
+          fullWidth
+          margin="normal"
+          onChange={e => this.onTitleChange(e.target.value)}
+          onClick={e => (e.target.disabled = false)}
+        />
+        <div className={editorStyles.editor} onClick={this.focus}>
+          <Editor
+            ref={el => {
+              this.editor = el
+            }}
+            editorState={this.state.editorState}
+            onChange={this.onChange}
+          />
+        </div>
+      </div>
+    )
+  }
+
   componentDidMount() {
-    // this.focus()
+    this.focus()
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.thing.id !== this.props.thing.id) {
+      this.setState(this.getStateFromProps(nextProps))
+    }
   }
 }
-// <EmojiSelect />
 
 export default NotesEditor

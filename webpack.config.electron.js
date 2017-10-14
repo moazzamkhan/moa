@@ -2,7 +2,7 @@ const path = require("path")
 
 module.exports = {
   devtool: "source-map",
-  entry: { app: "./src/renderer.js", test: "./src/test-redux.js" },
+  entry: { app: "./src/app.js", test: "./src/test-redux.js" },
   output: {
     filename: "[name].bundle.js",
     path: path.resolve(__dirname, "dist")

@@ -4,19 +4,19 @@ import { connect } from "react-redux"
 import TextRenderer from "./types/TextRenderer"
 import NotesEditor from "./notes-editor/NotesEditor"
 
-const ThingRenderer = ({ thing }) => {  
+const ThingRenderer = ({ thing, onChange }) => {  
   switch (thing.type) {
     case "Note":
-      return <NotesEditor thing={thing} />
+      return <NotesEditor thing={thing} onChange={onChange} />
     default:
-      return <TextRenderer thing={thing} />
+      return <TextRenderer thing={thing} onChange={onChange} />
   }
 }
 
-const mapStateToProps = (state, ownProps) => {
-  const { match } = ownProps
+const mapStateToProps = ({ things }, { match }) => {
+  const { type, id } = match.params
   return {
-    thing: state.things.filter(t => t.id === match.params.id)[0]
+    thing: things.filter(t => t.id === id)[0]
   }
 }
 

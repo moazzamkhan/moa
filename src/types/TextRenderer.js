@@ -3,16 +3,26 @@ import TextField from "material-ui/TextField"
 
 const TextRenderer = ({ thing }) => {
   return (
-    <TextField
-      disabled
-      key={thing.id}
-      label={thing.name}
-      placeholder={thing.name}
-      multiline
-      defaultValue={thing.value}
-      fullWidth
-      margin="normal"
-    />
+    <div>
+      <TextField
+        disabled        
+        multiline
+        defaultValue={thing.name}
+        fullWidth
+        margin="normal"
+        onClick={e => (e.target.disabled = false)}
+        helperText={"Name"}
+      />
+      <TextField
+        disabled        
+        multiline
+        defaultValue={thing.value}
+        fullWidth
+        margin="normal"
+        onClick={e => (e.target.disabled = false)}
+        helperText={"Value"}
+      />
+    </div>
   )
 }
 

@@ -14,7 +14,8 @@ export function addThing(thing) {
 }
 
 export function updateThing(thing) {
-  return { type: UPDATE_THING, payload: thing }
+  console.log(thing)
+  return { type: UPDATE_THING, payload: Object.assign({ ...thing }, { lastModified: new Date().toJSON() }) }
 }
 
 export function deleteThing(id) {

@@ -5,8 +5,7 @@
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "build:w": "webpack --watch --config webpack.config.electron.js",
-    "serve": "webpack-dev-server --config webpack.config.web.js --content-base dist/"
+    "build:w": "webpack --watch --config webpack.config.electron.js"
   },
   "repository": "https://github.com/electron/electron-quick-start",
   "keywords": [
@@ -43,13 +42,6 @@
   },
   "dependencies": {
     "draft-js": "^0.10.2",
-    "draft-js-emoji-plugin": "^2.0.0-rc9",
-    "draft-js-inline-toolbar-plugin": "^2.0.0-rc8",
-    "draft-js-linkify-plugin": "^2.0.0-rc8",
-    "draft-js-mention-plugin": "^2.0.0-rc10",
-    "draft-js-plugins-editor": "^2.0.0-rc8",
-    "draft-js-static-toolbar-plugin": "^2.0.0-rc4",
-    "immutable": "^3.8.2",
     "material-ui": "^1.0.0-beta.12",
     "material-ui-icons": "^1.0.0-beta.10",
     "moment": "^2.18.1",
