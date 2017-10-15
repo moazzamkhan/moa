@@ -20,15 +20,12 @@ class NotesEditor extends Component {
     }
   }
 
-  onChange = editorState => {    
+  onChange = editorState => {
     this.setState({ editorState })
-    this.props.onChange(Object.assign({ ...this.props.thing }, { value: editorState.getCurrentContent().getPlainText() }))
-  }
-
-  onTitleChange = name => {
-    console.log(name)
-    this.setState({ name })
-    this.props.onChange(Object.assign({ ...this.props.thing }, { name }))
+    const value = editorState.getCurrentContent().getPlainText()
+    const text = value.trim()
+    const name = text ? (text.split(/\r?\n/)[0] || "").substring(0, 24) : "untitled"
+    this.props.onChange(Object.assign({ ...this.props.thing }, { name, value }))
   }
 
   focus = () => {
@@ -37,25 +34,14 @@ class NotesEditor extends Component {
 
   render() {
     return (
-      <div>
-        <TextField
-          disabled
-          multiline
-          value={this.state.name}
-          fullWidth
-          margin="normal"
-          onChange={e => this.onTitleChange(e.target.value)}
-          onClick={e => (e.target.disabled = false)}
+      <div className={editorStyles.editor} onClick={this.focus}>
+        <Editor
+          ref={el => {
+            this.editor = el
+          }}
+          editorState={this.state.editorState}
+          onChange={this.onChange}
         />
-        <div className={editorStyles.editor} onClick={this.focus}>
-          <Editor
-            ref={el => {
-              this.editor = el
-            }}
-            editorState={this.state.editorState}
-            onChange={this.onChange}
-          />
-        </div>
       </div>
     )
   }

@@ -13,8 +13,7 @@ export function addThing(thing) {
   return { type: ADD_THING, payload: thing }
 }
 
-export function updateThing(thing) {
-  console.log(thing)
+export function updateThing(thing) {  
   return { type: UPDATE_THING, payload: Object.assign({ ...thing }, { lastModified: new Date().toJSON() }) }
 }
 

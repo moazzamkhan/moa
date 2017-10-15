@@ -26,8 +26,7 @@ const SidebarHeader = ({ type, classes, addThing }) => (
     className={classes.drawerHeader}
     style={{
       display: "flex",
-      alignItems: "center",
-      minHeight: 48
+      alignItems: "center"      
     }}
   >
     <SimpleMenuWithRoutes text={type} menuItems={menuItems} style={{ marginLeft: 10 }} />

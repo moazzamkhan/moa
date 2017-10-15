@@ -11,7 +11,7 @@ const styles = {
   }
 }
 
-const Sidebar = props => {
+const Sidebar = props => {  
   const { things, type, id, classes } = props
   return (
     <List>

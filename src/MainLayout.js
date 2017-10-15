@@ -47,9 +47,9 @@ const styles = theme => ({
     height: "calc(100% - 56px)",
     marginTop: 56,
     [theme.breakpoints.up("sm")]: {
-      height: "calc(100% - 48px)",
+      height: "calc(100% - 64px)",
       overflow: "auto",
-      marginTop: 48,
+      marginTop: 64,
       padding: 5
     }
   }

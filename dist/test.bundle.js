@@ -12440,7 +12440,6 @@ function addThing(thing) {
 }
 
 function updateThing(thing) {
-  console.log(thing);
   return { type: UPDATE_THING, payload: Object.assign(_extends({}, thing), { lastModified: new Date().toJSON() }) };
 }
 

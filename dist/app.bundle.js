@@ -25029,7 +25029,6 @@ function addThing(thing) {
 }
 
 function updateThing(thing) {
-  console.log(thing);
   return { type: UPDATE_THING, payload: Object.assign(_extends({}, thing), { lastModified: new Date().toJSON() }) };
 }
 
@@ -59739,9 +59738,9 @@ var styles = function styles(theme) {
       height: "calc(100% - 56px)",
       marginTop: 56
     }, theme.breakpoints.up("sm"), {
-      height: "calc(100% - 48px)",
+      height: "calc(100% - 64px)",
       overflow: "auto",
-      marginTop: 48,
+      marginTop: 64,
       padding: 5
     })
   };
@@ -68317,9 +68316,13 @@ var _Toolbar = __webpack_require__(338);
 
 var _Toolbar2 = _interopRequireDefault(_Toolbar);
 
-var _Typography = __webpack_require__(262);
+var _TextField = __webpack_require__(365);
 
-var _Typography2 = _interopRequireDefault(_Typography);
+var _TextField2 = _interopRequireDefault(_TextField);
+
+var _Input = __webpack_require__(366);
+
+var _Input2 = _interopRequireDefault(_Input);
 
 var _reactRouterDom = __webpack_require__(44);
 
@@ -68332,6 +68335,10 @@ var _MoreVert2 = _interopRequireDefault(_MoreVert);
 var _IconButton = __webpack_require__(269);
 
 var _IconButton2 = _interopRequireDefault(_IconButton);
+
+var _Search = __webpack_require__(738);
+
+var _Search2 = _interopRequireDefault(_Search);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -68359,12 +68366,38 @@ var AppToolbar = function (_Component) {
 
       return _react2.default.createElement(
         _Toolbar2.default,
-        { style: { minHeight: 48 } },
-        _react2.default.createElement(_Typography2.default, {
-          type: "title",
-          color: "inherit",
+        null,
+        _react2.default.createElement(
+          "div",
+          {
+            style: {
+              flex: 1,
+              display: "flex",
+              borderRadius: 3,
+              backgroundColor: "#536DFE"
+            }
+          },
+          _react2.default.createElement(_Search2.default, { style: { margin: 12, marginRight: 0 } }),
+          _react2.default.createElement(_Input2.default, {
+            fullWidth: true,
+            placeholder: "Search",
+            inputProps: {
+              "aria-label": "Search"
+            },
+            style: {
+              margin: 8,
+              color: "#ffffff"
+            },
+            margin: "normal",
+            onChange: function onChange(e) {
+              return console.log(e.target.value);
+            },
+            disableUnderline: true
+          })
+        ),
+        _react2.default.createElement("div", {
           style: {
-            flex: 1
+            width: "50%"
           }
         }),
         _react2.default.createElement(
@@ -68380,6 +68413,9 @@ var AppToolbar = function (_Component) {
 
   return AppToolbar;
 }(_react.Component);
+
+// <Typography type="title" color="inherit" />
+
 
 exports.default = AppToolbar;
 
@@ -75049,8 +75085,7 @@ var SidebarHeader = function SidebarHeader(_ref) {
       className: classes.drawerHeader,
       style: {
         display: "flex",
-        alignItems: "center",
-        minHeight: 48
+        alignItems: "center"
       }
     },
     _react2.default.createElement(_SimpleMenuWithRoutes2.default, { text: type, menuItems: menuItems, style: { marginLeft: 10 } }),
@@ -79488,31 +79523,14 @@ var NotesEditor = function (_Component) {
 
       return _react2.default.createElement(
         "div",
-        null,
-        _react2.default.createElement(_TextField2.default, {
-          disabled: true,
-          multiline: true,
-          value: this.state.name,
-          fullWidth: true,
-          margin: "normal",
-          onChange: function onChange(e) {
-            return _this2.onTitleChange(e.target.value);
+        { className: _editorStyles2.default.editor, onClick: this.focus },
+        _react2.default.createElement(_draftJs.Editor, {
+          ref: function ref(el) {
+            _this2.editor = el;
           },
-          onClick: function onClick(e) {
-            return e.target.disabled = false;
-          }
-        }),
-        _react2.default.createElement(
-          "div",
-          { className: _editorStyles2.default.editor, onClick: this.focus },
-          _react2.default.createElement(_draftJs.Editor, {
-            ref: function ref(el) {
-              _this2.editor = el;
-            },
-            editorState: this.state.editorState,
-            onChange: this.onChange
-          })
-        )
+          editorState: this.state.editorState,
+          onChange: this.onChange
+        })
       );
     }
   }, {
@@ -79543,13 +79561,10 @@ var _initialiseProps = function _initialiseProps() {
 
   this.onChange = function (editorState) {
     _this3.setState({ editorState: editorState });
-    _this3.props.onChange(Object.assign(_extends({}, _this3.props.thing), { value: editorState.getCurrentContent().getPlainText() }));
-  };
-
-  this.onTitleChange = function (name) {
-    console.log(name);
-    _this3.setState({ name: name });
-    _this3.props.onChange(Object.assign(_extends({}, _this3.props.thing), { name: name }));
+    var value = editorState.getCurrentContent().getPlainText();
+    var text = value.trim();
+    var name = text ? (text.split(/\r?\n/)[0] || "").substring(0, 24) : "untitled";
+    _this3.props.onChange(Object.assign(_extends({}, _this3.props.thing), { name: name, value: value }));
   };
 
   this.focus = function () {
@@ -88245,6 +88260,47 @@ exports.default = LocalThingsStoreFile;
 /***/ (function(module, exports) {
 
 module.exports = require("fs");
+
+/***/ }),
+/* 737 */,
+/* 738 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(2);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _pure = __webpack_require__(204);
+
+var _pure2 = _interopRequireDefault(_pure);
+
+var _SvgIcon = __webpack_require__(205);
+
+var _SvgIcon2 = _interopRequireDefault(_SvgIcon);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var _ref = _react2.default.createElement('path', { d: 'M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z' });
+
+var Search = function Search(props) {
+  return _react2.default.createElement(
+    _SvgIcon2.default,
+    props,
+    _ref
+  );
+};
+
+Search = (0, _pure2.default)(Search);
+Search.muiName = 'SvgIcon';
+
+exports.default = Search;
 
 /***/ })
 /******/ ]);
