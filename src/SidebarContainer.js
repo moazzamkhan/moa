@@ -11,8 +11,11 @@ const styles = {
   }
 }
 
-const Sidebar = props => {  
+const Sidebar = props => {
   const { things, type, id, classes } = props
+  
+  // things.map(t => console.log(t.name))
+
   return (
     <List>
       {things.map(t => (

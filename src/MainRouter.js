@@ -3,7 +3,10 @@ import MainLayout from "./MainLayout"
 import { connect } from "react-redux"
 import Button from "material-ui/Button"
 
-import { HashRouter as Router, Route, Redirect, Link } from "react-router-dom"
+import { Route, Redirect, Link } from "react-router-dom"
+
+import { ConnectedRouter as Router } from 'react-router-redux'
+
 // import { BrowserRouter as Router, Route, Link } from "react-router-dom"
 
 const CreateNewLayout = ({ match }) => {
@@ -19,9 +22,9 @@ const CreateNewLayout = ({ match }) => {
     </div>
   )
 }
-const MainRouter = () => {
+const MainRouter = ({history}) => {
   return (
-    <Router>
+    <Router history={history}>
       <div>
         <Route path="/" component={CreateNewLayout} exact />
         <Route path="/:type/:id?" component={MainLayout} exact />
