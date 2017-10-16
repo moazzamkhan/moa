@@ -1,0 +1,17 @@
+.editor {
+  height: calc(100vh - 70px);
+  overflow: auto;
+  box-sizing: border-box;
+  border: 1px solid #ddd;
+  cursor: text;
+  padding: 5px;
+  border-radius: 2px;
+  background: #fefefe;
+  min-height: 140px;
+  /* font-family: 'Inconsolata', monospace; */
+  font-family: 'Roboto', sans-serif;  
+}
+
+.editor :global(.public-DraftEditor-content) {
+  min-height: 140px;
+}

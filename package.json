@@ -5,7 +5,8 @@
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "build:w": "webpack --watch --config webpack.config.electron.js"
+    "build:w": "webpack --watch --config webpack.config.electron.js",
+    "package": "electron-packager ."
   },
   "repository": "https://github.com/electron/electron-quick-start",
   "keywords": [
@@ -31,6 +32,7 @@
     "devtron": "^1.4.0",
     "electron": "~1.7.8",
     "electron-debug": "^1.4.0",
+    "electron-packager": "^9.1.0",
     "eslint": "^4.8.0",
     "eslint-config-airbnb": "^16.0.0",
     "eslint-plugin-import": "^2.7.0",
