@@ -8,7 +8,7 @@ const things = (state = [], action) => {
       return [...state, action.payload]
       break
     case DELETE_THING:
-      return state.filter(thing => thing.id !== action.payload)
+      return state.filter(thing => thing.id !== action.payload.id)
       break
 
     case UPDATE_THING:

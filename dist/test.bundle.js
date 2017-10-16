@@ -14684,8 +14684,8 @@ function updateThing(thing) {
   return { type: UPDATE_THING, payload: Object.assign(_extends({}, thing), { lastModified: new Date().toJSON() }) };
 }
 
-function deleteThing(id) {
-  return { type: DELETE_THING, payload: id };
+function deleteThing(thing) {
+  return { type: DELETE_THING, payload: thing };
 }
 
 function showSaveLoader() {
@@ -16558,7 +16558,7 @@ var things = function things() {
       break;
     case _actions.DELETE_THING:
       return state.filter(function (thing) {
-        return thing.id !== action.payload;
+        return thing.id !== action.payload.id;
       });
       break;
 

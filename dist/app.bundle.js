@@ -26944,8 +26944,8 @@ function updateThing(thing) {
   return { type: UPDATE_THING, payload: Object.assign(_extends({}, thing), { lastModified: new Date().toJSON() }) };
 }
 
-function deleteThing(id) {
-  return { type: DELETE_THING, payload: id };
+function deleteThing(thing) {
+  return { type: DELETE_THING, payload: thing };
 }
 
 function showSaveLoader() {
@@ -34869,7 +34869,7 @@ var things = function things() {
       break;
     case _actions.DELETE_THING:
       return state.filter(function (thing) {
-        return thing.id !== action.payload;
+        return thing.id !== action.payload.id;
       });
       break;
 
@@ -80833,10 +80833,10 @@ var styles = function styles(theme) {
       height: "calc(100% - 56px)",
       marginTop: 56
     }, theme.breakpoints.up("sm"), {
-      height: "calc(100% - 64px)",
+      height: "calc(100% - 70px)",
       overflow: "auto",
       marginTop: 64,
-      padding: 5
+      padding: 3
     })
   };
 };
@@ -80872,7 +80872,7 @@ var MainLayout = function MainLayout(_ref) {
               paper: classes.drawerPaper
             }
           },
-          _react2.default.createElement(_SidebarHeaderContainer2.default, { type: type, id: id }),
+          _react2.default.createElement(_SidebarHeaderContainer2.default, { things: things, type: type, id: id }),
           _react2.default.createElement(_Divider2.default, null),
           _react2.default.createElement(_SidebarContainer2.default, { things: things, type: type, id: id })
         ),
@@ -89499,21 +89499,19 @@ var AppToolbar = function (_Component) {
           style: {
             width: "50%"
           }
-        }),
-        _react2.default.createElement(_Progress.CircularProgress, { color: "accent" }),
-        _react2.default.createElement(
-          _IconButton2.default,
-          { color: "contrast", "aria-label": "New Note", onClick: function onClick() {
-              return console.log("you");
-            } },
-          _react2.default.createElement(_MoreVert2.default, null)
-        )
+        })
       );
     }
   }]);
 
   return AppToolbar;
 }(_react.Component);
+
+// <CircularProgress color="accent" />        
+// <IconButton color="contrast" aria-label={"New Note"} onClick={() => console.log("you")}>
+//   <MoreVertIcon />
+// </IconButton>
+
 
 exports.default = AppToolbar;
 
@@ -98625,6 +98623,10 @@ var _ThingFactory2 = _interopRequireDefault(_ThingFactory);
 
 var _reactRouterDom = __webpack_require__(59);
 
+var _Delete = __webpack_require__(1104);
+
+var _Delete2 = _interopRequireDefault(_Delete);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var menuItems = [{ id: "new-type", text: "+Type", to: "/Type" }, { id: "new-thing", text: "+Thing", to: "/Thing" }, { id: "new-note", text: "+Note", to: "/Note" }, { id: "new-contact", text: "+Contact", to: "/Contact" }];
@@ -98637,8 +98639,11 @@ var styles = function styles(theme) {
 
 var SidebarHeader = function SidebarHeader(_ref) {
   var type = _ref.type,
+      id = _ref.id,
+      thing = _ref.thing,
       classes = _ref.classes,
-      addThing = _ref.addThing;
+      addThing = _ref.addThing,
+      deleteThing = _ref.deleteThing;
   return _react2.default.createElement(
     "div",
     {
@@ -98648,8 +98653,23 @@ var SidebarHeader = function SidebarHeader(_ref) {
         alignItems: "center"
       }
     },
-    _react2.default.createElement(_SimpleMenuWithRoutes2.default, { text: type, menuItems: menuItems, style: { marginLeft: 10 } }),
+    _react2.default.createElement(
+      _reactRouterDom.Link,
+      { to: "/" },
+      _react2.default.createElement(
+        _IconButton2.default,
+        { color: "primary" },
+        _react2.default.createElement(_Home2.default, null)
+      )
+    ),
     _react2.default.createElement("div", { style: { flex: 1 } }),
+    id && _react2.default.createElement(
+      _IconButton2.default,
+      { "aria-label": "New " + type, color: "primary", onClick: function onClick() {
+          return deleteThing(thing);
+        } },
+      _react2.default.createElement(_Delete2.default, null)
+    ),
     _react2.default.createElement(
       _IconButton2.default,
       { "aria-label": "New " + type, color: "primary", onClick: function onClick() {
@@ -98661,12 +98681,13 @@ var SidebarHeader = function SidebarHeader(_ref) {
 };
 
 var mapStateToProps = function mapStateToProps(state, _ref2) {
-  var _ref2$type = _ref2.type,
-      type = _ref2$type === undefined ? "Note" : _ref2$type,
+  var things = _ref2.things,
       id = _ref2.id;
 
   return {
-    type: type
+    thing: things.filter(function (t) {
+      return t.id === id;
+    })[0]
   };
 };
 
@@ -98674,6 +98695,9 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
     addThing: function addThing(t) {
       return dispatch((0, _actions.addThing)(t));
+    },
+    deleteThing: function deleteThing(t) {
+      return dispatch((0, _actions.deleteThing)(t));
     }
   };
 };
@@ -98681,6 +98705,8 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 var SidebarHeaderContainer = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(SidebarHeader);
 
 exports.default = (0, _styles.withStyles)(styles)(SidebarHeaderContainer);
+
+// <SimpleMenuWithRoutes text={type} menuItems={menuItems} style={{ marginLeft: 10 }} />
 
 /***/ }),
 /* 982 */
@@ -107899,7 +107925,7 @@ exports = module.exports = __webpack_require__(1087)(undefined);
 
 
 // module
-exports.push([module.i, "._3YDO1mZwst-TFYfg_NAXyE {\n  box-sizing: border-box;\n  border: 1px solid #ddd;\n  cursor: text;\n  padding: 5px;\n  border-radius: 2px;\n  background: #fefefe;\n  min-height: 140px;\n  /* font-family: 'Inconsolata', monospace; */\n  font-family: 'Roboto', sans-serif;  \n}\n\n._3YDO1mZwst-TFYfg_NAXyE .public-DraftEditor-content {\n  min-height: 140px;\n}\n", ""]);
+exports.push([module.i, "._3YDO1mZwst-TFYfg_NAXyE {\n  height: calc(100vh - 70px);\n  overflow: auto;\n  box-sizing: border-box;\n  border: 1px solid #ddd;\n  cursor: text;\n  padding: 5px;\n  border-radius: 2px;\n  background: #fefefe;\n  min-height: 140px;\n  /* font-family: 'Inconsolata', monospace; */\n  font-family: 'Roboto', sans-serif;  \n}\n\n._3YDO1mZwst-TFYfg_NAXyE .public-DraftEditor-content {\n  min-height: 140px;\n}\n", ""]);
 
 // exports
 exports.locals = {
@@ -108755,22 +108781,28 @@ var _store2 = _interopRequireDefault(_store);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var thingEpic = function thingEpic(action$) {
+var thingAddEpic = function thingAddEpic(action$) {
   return action$.ofType(_actions.ADD_THING).map(function (_ref) {
     var payload = _ref.payload;
     return (0, _reactRouterRedux.push)("/" + payload.type + "/" + payload.id);
+  });
+};
+var thingDeleteEpic = function thingDeleteEpic(action$) {
+  return action$.ofType(_actions.DELETE_THING).map(function (_ref2) {
+    var payload = _ref2.payload;
+    return (0, _reactRouterRedux.push)("/" + payload.type);
   });
 };
 
 // const saveEpic = action$ =>
 //   action$.filter(action => action.type === ADD_THING || action.type === DELETE_THING || action.type === UPDATE_THING).mapTo(action => {
 //     PersistentStore.setData(store.getState())
-//     return 
+//     return
 //   })
 
 //   const saveLoader = action$=> action$.ofType(SAv)
 
-exports.default = (0, _reduxObservable.combineEpics)(thingEpic);
+exports.default = (0, _reduxObservable.combineEpics)(thingDeleteEpic);
 
 /***/ }),
 /* 1096 */
@@ -109339,6 +109371,47 @@ LinearProgress.defaultProps = {
 };
 
 exports.default = (0, _withStyles2.default)(styles, { name: 'MuiLinearProgress' })(LinearProgress);
+
+/***/ }),
+/* 1103 */,
+/* 1104 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(3);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _pure = __webpack_require__(66);
+
+var _pure2 = _interopRequireDefault(_pure);
+
+var _SvgIcon = __webpack_require__(67);
+
+var _SvgIcon2 = _interopRequireDefault(_SvgIcon);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var _ref = _react2.default.createElement('path', { d: 'M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z' });
+
+var Delete = function Delete(props) {
+  return _react2.default.createElement(
+    _SvgIcon2.default,
+    props,
+    _ref
+  );
+};
+
+Delete = (0, _pure2.default)(Delete);
+Delete.muiName = 'SvgIcon';
+
+exports.default = Delete;
 
 /***/ })
 /******/ ]);

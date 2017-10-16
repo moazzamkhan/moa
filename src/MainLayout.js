@@ -47,10 +47,10 @@ const styles = theme => ({
     height: "calc(100% - 56px)",
     marginTop: 56,
     [theme.breakpoints.up("sm")]: {
-      height: "calc(100% - 64px)",
+      height: "calc(100% - 70px)",
       overflow: "auto",
       marginTop: 64,
-      padding: 5
+      padding: 3
     }
   }
 })
@@ -72,7 +72,7 @@ const MainLayout = ({ things, classes, match, onThingUpdated }) => {
               paper: classes.drawerPaper
             }}
           >
-            <SidebarHeaderContainer {...{ type, id }} />
+            <SidebarHeaderContainer {...{ things, type, id }} />
             <Divider />
             <SidebarContainer {...{ things, type, id }} />
           </Drawer>

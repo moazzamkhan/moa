@@ -46,11 +46,13 @@ export default class AppToolbar extends Component {
             width: "50%"
           }}
         />
-        <CircularProgress color="accent" />        
-        <IconButton color="contrast" aria-label={"New Note"} onClick={() => console.log("you")}>
-          <MoreVertIcon />
-        </IconButton>
       </Toolbar>
     )
   }
 }
+
+// <CircularProgress color="accent" />        
+// <IconButton color="contrast" aria-label={"New Note"} onClick={() => console.log("you")}>
+//   <MoreVertIcon />
+// </IconButton>
+

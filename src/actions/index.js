@@ -13,8 +13,8 @@ export function updateThing(thing) {
   return { type: UPDATE_THING, payload: Object.assign({ ...thing }, { lastModified: new Date().toJSON() }) }
 }
 
-export function deleteThing(id) {
-  return { type: DELETE_THING, payload: id }
+export function deleteThing(thing) {
+  return { type: DELETE_THING, payload: thing }
 }
 
 export function showSaveLoader() {

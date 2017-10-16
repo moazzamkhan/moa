@@ -1,4 +1,6 @@
 .editor {
+  height: calc(100vh - 70px);
+  overflow: auto;
   box-sizing: border-box;
   border: 1px solid #ddd;
   cursor: text;
