@@ -2,7 +2,6 @@ import React from "react"
 import { Component } from "react"
 import Everything from "./Everything"
 import Button from "material-ui/Button"
-import Store from "./store"
 import NewThingForm from "./NewThingForm"
 
 export default class EverythingPage extends Component {

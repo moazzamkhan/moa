@@ -1,4 +1,6 @@
 import LocalThingsStoreFile from "./LocalThingsStoreFile"
-const store = new LocalThingsStoreFile()
+import SettingsStore from "./SettingsStore"
 
-export default store
+export const settingsStore = new SettingsStore()
+export const thingsStore = new LocalThingsStoreFile()
+

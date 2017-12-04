@@ -1,5 +1,4 @@
 const fs = require("fs")
-const configPath = "data/config.json"
 let storePath = "data/store.json"
 
 export default class LocalThingsStoreFile {
@@ -9,5 +8,6 @@ export default class LocalThingsStoreFile {
 
   getData() {
     return JSON.parse(fs.readFileSync(storePath, "utf8"))
-  }
+  }  
 }
+

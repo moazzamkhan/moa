@@ -44,6 +44,7 @@
   },
   "dependencies": {
     "draft-js": "^0.10.2",
+    "electron-oauth2": "^3.0.0",
     "history": "^4.7.2",
     "material-ui": "^1.0.0-beta.12",
     "material-ui-icons": "^1.0.0-beta.10",

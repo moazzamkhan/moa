@@ -15,11 +15,11 @@ import createHistory from "history/createHashHistory"
 import { routerMiddleware, push } from "react-router-redux"
 
 import thingsApp from "./reducers"
-import PersistentStore from "./store"
+import { thingsStore } from "./store"
 
 const history = createHistory()
 
-const store = createStore(thingsApp, PersistentStore.getData(), applyMiddleware(createEpicMiddleware(epics), routerMiddleware(history)))
+const store = createStore(thingsApp, thingsStore.getData() || {}, applyMiddleware(createEpicMiddleware(epics), routerMiddleware(history)))
 
 ReactDOM.render(
   <Provider store={store}>
@@ -30,5 +30,5 @@ ReactDOM.render(
 
 store.subscribe(() => {
   // console.log(store.getState().things)
-  PersistentStore.setData(store.getState())
+  thingsStore.setData(store.getState())
 })

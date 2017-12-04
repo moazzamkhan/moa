@@ -23,7 +23,7 @@ const Sidebar = props => {
           button
           key={t.id}
           component={Link}
-          to={"/" + type + "/" + t.id}
+          to={"/things/" + type + "/" + t.id}
           style={styles}
           className={id === t.id ? classes.selected : null}
         >
